@@ -20,6 +20,7 @@
     </c:forEach>
 
     <script type="text/javascript">
+
         $(function () {
 
             //1.初始化Table
@@ -27,8 +28,8 @@
             oTable.Init();
 
             //2.初始化Button的点击事件
-            var oButtonInit = new ButtonInit();
-            oButtonInit.Init();
+            //var oButtonInit = new ButtonInit();
+            //oButtonInit.Init();
 
         });
 
@@ -87,18 +88,23 @@
             };
             return oTableInit;
         };
+        //其余操作要等dom加载后才能执行。放到$(document).ready(function(){方法中或者放在div后
+        $(document).ready(function () {
+            $("#btn_query").click(function(){
+                alert("!!!");
+            });
+        });
 
+        //var ButtonInit = function () {
+           // var oInit = new Object();
+           // var postdata = {};
 
-        var ButtonInit = function () {
-            var oInit = new Object();
-            var postdata = {};
+           // oInit.Init = function () {
+          //      //初始化页面上面的按钮事件
+         //   };
 
-            oInit.Init = function () {
-                //初始化页面上面的按钮事件
-            };
-
-            return oInit;
-        };
+          //  return oInit;
+      //  };
     </script>
     <div class="panel-body" style="padding-bottom:0px;">
         <div class="panel panel-default">

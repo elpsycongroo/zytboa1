@@ -1,8 +1,8 @@
 # zytboa1
 实验性OA系统
-##IDE
+## IDE
 Intellij Idea
-##Framework
+## Framework
 Spring+SpringMVC+MyBatis
 Bootstrap3+x-editable+bootstrapTable
 

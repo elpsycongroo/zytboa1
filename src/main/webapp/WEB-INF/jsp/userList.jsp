@@ -6,7 +6,8 @@
   <head>
       <link rel="stylesheet" type="text/css" href="${proPath}/css/bootstrap-table.css"/>
       <link rel="stylesheet" type="text/css" href="${proPath}/css/bootstrap-editable.css"/>
-      <script type="text/javascript" src="${proPath}/js/bootstrap-table-zh-CN.js"></script>
+      <script type="text/javascript" src="${proPath}/js/bootstrap-table.js"></script>
+      <script type="text/javascript" src="${proPath}/js/locale/bootstrap-table-zh-CN.js"></script>
       <script type="text/javascript" src="${proPath}/js/bootstrap-editable.min.js"></script>
       <title>My JSP 'userList.jsp' starting page</title>
   </head>

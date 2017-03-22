@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -28,8 +29,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>用户登录</title>
 <body>
-
 <!-- Top content -->
+<script>
+
+</script>
 <div class="top-content">
     <div class="inner-bg">
         <div class="container">
@@ -50,7 +53,7 @@
                         </div>
                     </div>
                     <div class="form-bottom">
-                        <form role="form" action="" method="post" class="login-form">
+                        <form role="form" action="${proPath}/login" method="post" class="login-form" id="loginForm">
                             <div class="form-group">
                                 <label class="sr-only" for="form-username">Username</label>
                                 <input type="text" name="form-username" placeholder="账号..."

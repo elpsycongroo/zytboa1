@@ -1,19 +1,13 @@
-<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ include file="common/common.jsp"%>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE>
 <html>
   <head>
-    <base href="<%=basePath%>">
-    
     <title>My JSP 'index.jsp' starting page</title>
   </head>
   
   <body>
-    This is my JSP page. 
-    <a href="user/userList">userList</a><br>
+  <a href="${proPath}/img/clear.png">proPath/</a>
   </body>
 </html>

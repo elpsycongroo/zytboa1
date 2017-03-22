@@ -37,7 +37,7 @@ public class UserController {
 	public Object userTable(int limit,int offset,String name){
 		Map<String,Object> resMap = new HashMap<>();
 		List<User> userList = userServiceImpl.getAll();
-		resMap.put("total",2);
+		resMap.put("total",userList.size());
 		resMap.put("rows",userList);
 		return JSON.toJSONString(resMap);
 	}

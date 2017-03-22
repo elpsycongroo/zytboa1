@@ -20,6 +20,7 @@
     <link rel="apple-touch-icon-precomposed" href="${proPath}/img/apple-touch-icon-57-precomposed.png">
     <script src="${proPath}/js/jquery.backstretch.min.js"></script>
     <script src="${proPath}/js/loginscripts.js"></script>
+    <script src="${proPath}/js/jquery.validate.js"></script>
     <style>
         body{
             font-family: "Microsoft YaHei";
@@ -30,9 +31,6 @@
     <title>用户登录</title>
 <body>
 <!-- Top content -->
-<script>
-
-</script>
 <div class="top-content">
     <div class="inner-bg">
         <div class="container">
@@ -53,15 +51,15 @@
                         </div>
                     </div>
                     <div class="form-bottom">
-                        <form role="form" action="${proPath}/login" method="post" class="login-form" id="loginForm">
+                        <form role="form" action="javascript:alert('验证成功,可以提交.');" method="post" class="login-form" id="loginForm">
                             <div class="form-group">
                                 <label class="sr-only" for="form-username">Username</label>
-                                <input type="text" name="form-username" placeholder="账号..."
+                                <input type="text" name="name" placeholder="账号..."
                                        class="form-username form-control" id="form-username">
                             </div>
                             <div class="form-group">
                                 <label class="sr-only" for="form-password">Password</label>
-                                <input type="password" name="form-password" placeholder="密码..."
+                                <input type="password" name="password" placeholder="密码..."
                                        class="form-password form-control" id="form-password">
                             </div>
                             <button type="submit" class="btn">登录!</button>
@@ -86,5 +84,54 @@
         </div>
     </div>
 </div>
+<script>
+    $("#loginForm").validate({
+        errorElement : 'span',
+        errorClass : 'help-block',
+        focusInvalid : false,
+        rules : {
+            name : {
+                required : true
+            },
+            password : {
+                required : true
+            }
+        },
+        messages : {
+            name : {
+                required : "请输入用户名."
+            },
+            password : {
+                required : "请输入密码."
+            }
+        },
+
+        highlight : function(element) {
+            $(element).closest('.form-group').addClass('has-error');
+        },
+
+        success : function(label) {
+            label.closest('.form-group').removeClass('has-error');
+            label.remove();
+        },
+
+        errorPlacement : function(error, element) {
+            element.parent('div').append(error);
+            console.log(error);
+        },
+
+        submitHandler : function(form) {
+            form.submit();
+        }
+    });
+    $('#loginForm input').keypress(function(e) {
+        if (e.which == 13) {
+            if ($('#loginForm').validate().form()) {
+                $('#loginForm').submit();
+            }
+            return false;
+        }
+    });
+</script>
 </body>
 </html>

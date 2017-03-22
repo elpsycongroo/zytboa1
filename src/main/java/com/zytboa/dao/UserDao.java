@@ -12,5 +12,7 @@ public interface UserDao {
 	public int add(User user);
 	
 	public List<User> getAll();
+
+	public int update(User user);
 	
 }

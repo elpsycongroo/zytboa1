@@ -67,7 +67,14 @@
                         title: '用户编号'
                     }, {
                         field: 'name',
-                        title: '用户名'
+                        title: '用户名',
+                        editable:{
+                            type: 'text',
+                            title: '用户名',
+                            validate: function(v){
+                                if(!v) return '用户名不能为空';
+                            }
+                        }
                     }, {
                         field: 'password',
                         title: '用户密码'

@@ -41,5 +41,21 @@ public class UserController {
 		resMap.put("rows",userList);
 		return JSON.toJSONString(resMap);
 	}
+
+	@RequestMapping("/updateUser")
+    @ResponseBody
+	public Object updateUser(User user){
+	    String res;
+	    try{
+            userServiceImpl.update(user);
+        }catch (Exception e){
+	        e.printStackTrace();
+            res = "Exception Raised...";
+            return res;
+        }
+        res = "success";
+        return res;
+    }
+
 	
 }

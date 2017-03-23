@@ -14,5 +14,7 @@ public interface UserDao {
 	public List<User> getAll();
 
 	public int update(User user);
+
+	public User findById(User user);
 	
 }

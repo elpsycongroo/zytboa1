@@ -26,12 +26,14 @@ public class LoginFilter implements Filter {
         HttpSession session = req.getSession();
         String path = req.getRequestURI();
         User user = (User) session.getAttribute("user");
-        if(path.indexOf("login.jsp") > -1){
+        if(path.indexOf("login") > -1){
             filterChain.doFilter(req,resp);
             return;
+        }else if(path.contains(".css") || path.contains(".js") || path.contains("img") || path.contains("fonts")){
+            filterChain.doFilter(req,resp);
         }else{
             if(user == null){
-                resp.sendRedirect(req.getContextPath()+"/login.jsp");
+                resp.sendRedirect(req.getContextPath()+"/login");
             }else{
                 filterChain.doFilter(req,resp);
             }

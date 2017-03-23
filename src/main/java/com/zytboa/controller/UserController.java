@@ -23,20 +23,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UserController {
 	
 	@Resource
-	private UserService userServiceImpl;
+	private UserService userService;
 	
 	@RequestMapping("/userList")
 	public String userList(HttpServletRequest req,Model model){
-		List<User> userList = userServiceImpl.getAll();
+		List<User> userList = userService.getAll();
 		model.addAttribute("userList",userList);
-		return "userList";
+		return "forward:/WEB-INF/jsp/userList.jsp";
 	}
 
 	@RequestMapping("/userTable")
 	@ResponseBody
 	public Object userTable(int limit,int offset,String name){
 		Map<String,Object> resMap = new HashMap<>();
-		List<User> userList = userServiceImpl.getAll();
+		List<User> userList = userService.getAll();
 		resMap.put("total",userList.size());
 		resMap.put("rows",userList);
 		return JSON.toJSONString(resMap);
@@ -47,7 +47,7 @@ public class UserController {
 	public Object updateUser(User user){
 	    String res;
 	    try{
-            userServiceImpl.update(user);
+			userService.update(user);
         }catch (Exception e){
 	        e.printStackTrace();
             res = "Exception Raised...";

@@ -7,7 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="common/common.jsp" %>
+<%@ include file="../../common/common.jsp" %>
 <!DOCTYPE HTML>
 <head>
     <link rel="stylesheet" href="${proPath}/css/font-awesome.min.css">
@@ -45,13 +45,14 @@
                         <div class="form-top-left">
                             <h3>登录OA系统</h3>
                             <p>输入您的账号和密码登录:</p>
+                            <p style="color: #a94442;">${msg}</p>
                         </div>
                         <div class="form-top-right">
                             <i class="fa fa-lock"></i>
                         </div>
                     </div>
                     <div class="form-bottom">
-                        <form role="form" action="javascript:alert('验证成功,可以提交.');" method="post" class="login-form" id="loginForm">
+                        <form role="form" action="${proPath}/loginValidate" method="post" class="login-form" id="loginForm">
                             <div class="form-group">
                                 <label class="sr-only" for="form-username">Username</label>
                                 <input type="text" name="name" placeholder="账号..."

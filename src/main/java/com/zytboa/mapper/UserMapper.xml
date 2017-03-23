@@ -32,10 +32,25 @@
             #{password,jdbcType=VARCHAR},    
           </if>     
         </trim>     
-    </insert>  
+    </insert>
+
+    <update id="update" parameterType="com.zytboa.vo.User">
+        UPDATE user SET
+        <if test="name != null">
+            name=#{name,jdbcType=VARCHAR},
+        </if>
+        <if test="password != null">
+            password=#{password,jdbcType=VARCHAR},
+        </if>
+        WHERE id=#{id,jdbcType=INTEGER}
+    </update>
       
     <select id="getAll" resultMap="BaseResultMap">
     	select * from user
+    </select>
+
+    <select id="findById" parameterType="com.zytboa.vo.User" resultMap="BaseResultMap">
+        select * FROM user where name=#{name,jdbcType=VARCHAR} AND password=#{password,jdbcType=VARCHAR};
     </select>
     
 </mapper>  

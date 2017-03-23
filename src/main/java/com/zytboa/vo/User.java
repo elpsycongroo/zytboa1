@@ -1,7 +1,10 @@
 package com.zytboa.vo;
 
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 
+@Component("user")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;

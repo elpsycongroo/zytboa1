@@ -7,95 +7,86 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="proPath" value="${pageContext.request.contextPath}" />
+<%@ taglib prefix='fmt' uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="proPath" value="${pageContext.request.contextPath}"/>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="${proPath}/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="${proPath}/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${proPath}/css/metisMenu.css"/>
+    <link rel="stylesheet" href="${proPath}/css/prism.min.css"/>
+    <link rel="stylesheet" href="${proPath}/css/animate.min.css"/>
+    <link href="${proPath}/css/mm-vertical.css" rel="stylesheet" type="text/css"/>
     <script src="${proPath}/js/jquery-3.2.0.min.js"></script>
     <script src="${proPath}/js/bootstrap.min.js"></script>
-    <link href="${proPath}/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="${proPath}/css/mm-vertical.css" rel="stylesheet"/>
     <script src="${proPath}/js/metisMenu.js"></script>
-    <link href="${proPath}/css/metisMenu.css" rel="stylesheet"/>
+    <script src="${proPath}/js/prism.min.js"></script>
+    <script async defer src="${proPath}/js/buttons.js"></script>
+    <script src="${proPath}/js/jquery.noty.packaged.min.js"></script>
+    <style>
+        .navbar {
+            margin-bottom: 0px;
+        }
+
+        .p-t-15 {
+            padding-top: 15px;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <aside class="col-md-3">
-        <nav class="sidebar-nav">
-            <ul class="metismenu" id="menu1">
-                <li>
-                    <a class="has-arrow" href="#">
-                        <span class="fa fa-fw fa-github fa-lg"></span>
-                        metisMenu
-                    </a>
-                    <ul aria-expanded="true">
-                        <li>
-                            <a href="https://github.com/onokumus/metisMenu">
-                                <span class="fa fa-fw fa-code-fork"></span> Fork
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://github.com/onokumus/metisMenu">
-                                <span class="fa fa-fw fa-star"></span> Star
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://github.com/onokumus/metisMenu/issues">
-                                <span class="fa fa-fw fa-exclamation-triangle"></span> Issues
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="has-arrow" href="#" aria-expanded="false">Menu 0</a>
-                    <ul aria-expanded="false">
-                        <li><a href="#">item 0.1</a></li>
-                        <li><a href="#">item 0.2</a></li>
-                        <li><a href="http://onokumus.com">onokumus</a></li>
-                        <li><a href="#">item 0.4</a></li>
-                    </ul>
-                </li>
-                <li id="removable">
-                    <a class="has-arrow" href="#" aria-expanded="false">Menu 1</a>
-                    <ul aria-expanded="false">
-                        <li><a href="#">item 1.1</a></li>
-                        <li><a href="#">item 1.2</a></li>
-                        <li>
-                            <a class="has-arrow" href="#" aria-expanded="false">Menu 1.3</a>
-                            <ul aria-expanded="false">
-                                <li><a href="#">item 1.3.1</a></li>
-                                <li><a href="#">item 1.3.2</a></li>
-                                <li><a href="#">item 1.3.3</a></li>
-                                <li><a href="#">item 1.3.4</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">item 1.4</a></li>
-                        <li>
-                            <a class="has-arrow" href="#" aria-expanded="false">Menu 1.5</a>
-                            <ul aria-expanded="false">
-                                <li><a href="#">item 1.5.1</a></li>
-                                <li><a href="#">item 1.5.2</a></li>
-                                <li><a href="#">item 1.5.3</a></li>
-                                <li><a href="#">item 1.5.4</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="has-arrow" href="#" aria-expanded="false">Menu 2</a>
-                    <ul aria-expanded="false">
-                        <li><a href="#">item 2.1</a></li>
-                        <li><a href="#">item 2.2</a></li>
-                        <li><a href="#">item 2.3</a></li>
-                        <li><a href="#">item 2.4</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-    </aside>
+<%@include file="nav.jsp" %>
+<!-- BEGIN: .row -->
+<%@include file="menu.jsp" %>
+<div class="container-fluid col-md-10 clo-md-offset-2 p-t-15">
+    <div class="panel panel-collapse panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">欢迎</h3>
+        </div>
+        <div class="panel-body">
+            欢迎${user.name}登录本系统！详细功能请参考左侧菜单和上方导航。<br/>
+            <jsp:useBean id="time" class="java.util.Date"/>
+            今天是<fmt:formatDate value="<%=time%>" type="date" dateStyle="long"/>。
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-collapse panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">公司公告</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                        <tr>
+                            <th>标题</th>
+                            <th>发布人</th>
+                            <th>发布日期</th>
+                        </tr>
+                        <tr>
+                            <td>欢迎使用bootstrap</td>
+                            <td>Twitter.Inc</td>
+                            <td><fmt:formatDate value="<%=time%>" type="date" dateStyle="short"/></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-collapse panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">系统通知</h3>
+                </div>
+                <div class="panel-body">
+                    <h6>您有未读消息</h6>
+                    <h6>您有未处理的事项</h6>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<script type="text/javascript" charset="utf-8">
-    $("#menu1").metisMenu();
-</script>
+
+
 </body>
 </html>

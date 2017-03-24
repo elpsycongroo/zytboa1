@@ -36,14 +36,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2 text">
-                    <h1><strong>企业OA系统</strong>登录</h1>
+                    <h1><strong>库存管理系统</strong>登录</h1>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-3 form-box">
                     <div class="form-top">
                         <div class="form-top-left">
-                            <h3>登录OA系统</h3>
+                            <h3>登录系统</h3>
                             <p>输入您的账号和密码登录:</p>
                             <p style="color: #a94442;">${msg}</p>
                         </div>

@@ -18,7 +18,7 @@
                     <li><a href="#">商品管理</a></li>
                 </ul>
             </li>
-            <li id="removable">
+            <li>
                 <a class="has-arrow" href="#" aria-expanded="false">
                     <span class="fa fa-fw fa-cny fa-lg"></span>进出货管理
                 </a>
@@ -55,27 +55,23 @@
             </li>
             <li>
                 <a class="has-arrow" href="#" aria-expanded="false">
-                    <span class="fa fa-fw fa-bar-calendar fa-lg"></span>个人事务
+                    <span class="fa fa-fw fa-calendar fa-lg"></span>事务管理
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="#">消息管理</a></li>
-                    <li><a href="#">工作汇报</a>
+                    <li>
+                        <a class="has-arrow" href="#" aria-expanded="false">工作汇报</a>
                         <ul aria-expanded="false">
-                            <li>工作汇报填写</li>
-                            <li>工作汇报审批</li>
+                            <li><a href="#">工作汇报填写</a></li>
+                            <li><a href="#">工作汇报审批</a></li>
                         </ul>
                     </li>
-                    <li><a href="#"></a>日程管理
-                        <ul aria-expanded="false">
-                            <li>工作汇报填写</li>
-                            <li>工作汇报审批</li>
-                        </ul>
-                    </li>
+                    <li><a href="#">日程管理</a></li>
                 </ul>
             </li>
             <li>
                 <a class="has-arrow" href="#" aria-expanded="false">
-                    <span class="fa fa-fw fa-bar-chart fa-lg"></span>系统管理
+                    <span class="fa fa-fw fa-briefcase fa-lg"></span>系统管理
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="#">个人设置</a></li>

@@ -40,6 +40,7 @@
 <!-- BEGIN: .row -->
 <%@include file="menu.jsp" %>
 <div class="container-fluid col-md-10 clo-md-offset-2 p-t-15">
+    <h1>首页 / <small>Index</small></h1>
     <div class="panel panel-collapse panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">欢迎</h3>
@@ -79,8 +80,9 @@
                     <h3 class="panel-title">系统通知</h3>
                 </div>
                 <div class="panel-body">
-                    <h6>您有未读消息</h6>
-                    <h6>您有未处理的事项</h6>
+                    <h5>您有未读消息</h5>
+                    <h5>您有未处理的日程</h5>
+                    <h5>您有待审批的汇报</h5>
                 </div>
             </div>
         </div>

@@ -64,6 +64,7 @@
                         <ul aria-expanded="false">
                             <li><a href="#">工作汇报填写</a></li>
                             <li><a href="#">工作汇报审批</a></li>
+                            <li><a href="#">历史进度明细</a></li>
                         </ul>
                     </li>
                     <li><a href="#">日程管理</a></li>
@@ -83,5 +84,7 @@
     </nav>
 </aside>
 <script type="text/javascript" charset="utf-8">
-    $('#menu1').metisMenu();
+    $('#menu1').metisMenu({
+        toggle:false
+    });
 </script>

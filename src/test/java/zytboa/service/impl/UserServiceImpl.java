@@ -1,4 +1,4 @@
-package com.zytboa.service.impl;
+package zytboa.service.impl;
 
 import java.util.List;
 

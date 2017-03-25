@@ -1,13 +1,11 @@
-package com.zytboa.dao;
+package zytboa.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
 import com.zytboa.vo.User;
 
-@Repository(value="userDao")
-public interface UserDao {
+
+public interface UserService {
 	
 	public int add(User user);
 	
@@ -15,8 +13,8 @@ public interface UserDao {
 
 	public int update(User user);
 
-	public User findById(User user);
+	public User login(User user);
 
 	public User findByUserId(int id);
-	
+
 }

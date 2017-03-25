@@ -1,4 +1,4 @@
-package com.zytboa.filter;
+package zytboa.filter;
 
 
 import com.zytboa.vo.User;
@@ -27,10 +27,6 @@ public class LoginFilter implements Filter {
         String path = req.getRequestURI();
         User user = (User) session.getAttribute("user");
         if(path.indexOf("login") > -1){
-            if(user != null){
-                resp.sendRedirect(req.getContextPath()+"/index");
-                return;
-            }
             filterChain.doFilter(req,resp);
         }else if(path.contains(".css") || path.contains(".js") || path.contains("img") || path.contains("fonts")){
             filterChain.doFilter(req,resp);

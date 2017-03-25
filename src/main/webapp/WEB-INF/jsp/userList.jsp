@@ -64,7 +64,7 @@ This is my JSP page. <br>
                 uniqueId: "id",                     //每一行的唯一标识，一般为主键列
                 showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
                 cardView: false,                    //是否显示详细视图
-                detailView: false,                   //是否显示父子表
+                detailView: true,                   //是否显示父子表
                 columns: [{
                     checkbox: true
                 }, {
@@ -84,6 +84,11 @@ This is my JSP page. <br>
                     field: 'password',
                     title: '用户密码'
                 }],
+                //注册加载子表的事件 注意三个参数
+                //index:父表当前行的行索引 row:父表当前行的json数据对象 $detail:当前行下面创建的新行里面的td对象
+                onExpandRow: function (index, row, $detail) {
+                    oTableInit.InitSubTable(index, row, $detail);
+                },
                 onEditableSave: function (field, row, oldValue, $el) {
                     $.ajax({
                         type: "post",
@@ -91,11 +96,11 @@ This is my JSP page. <br>
                         data: row,
                         dataType: 'text',
                         success: function (data) {
-                            if(data=="success") {
+                            if (data == "success") {
                                 growl("修改成功", "success");
-                            }else{
+                            } else {
                                 growl("修改失败,修改值没有生效!如无法解决，请联系管理员", "danger");
-                                $("#tb_departments").bootstrapTable('refresh',{slient:true});
+                                $("#tb_departments").bootstrapTable('refresh', {slient: true});
                             }
                         },
                         error: function () {
@@ -116,7 +121,50 @@ This is my JSP page. <br>
             };
             return temp;
         };
+        oTableInit.InitSubTable = function (index, row, $detail) {
+            var parentid = row.id;
+            var cur_table = $detail.html('<table></table>').find('table');
+            $(cur_table).bootstrapTable({
+                url: '${proPath}/user/subUserTable',
+                method: 'get',
+                queryParams: {
+                    parentid: parentid
+                },
+                ajaxOptions: {
+                    parentid: parentid
+                },
+                sidePagination: "server",
+                clickToSelect: true,
+                detailView: true,
+                uniqueId: "id",
+                pageSize: 10,
+                pageList:[10, 25],
+                columns: [{
+                    checkbox: true
+                }, {
+                    field: 'id',
+                    title: '用户编号'
+                }, {
+                    field: 'name',
+                    title: '用户名',
+                    editable: {
+                        type: 'text',
+                        title: '用户名',
+                        validate: function (v) {
+                            if (!v) return '用户名不能为空';
+                        }
+                    }
+                }, {
+                    field: 'password',
+                    title: '用户密码'
+                }],
+                onExpandRow:function(index,row,$subdetail){
+                    oTableInit.InitSubTable;
+                }
+            });
+        }
         return oTableInit;
+
     };
     //其余操作要等dom加载后才能执行。放到$(document).ready(function(){方法中或者放在div后
     $(document).ready(function () {

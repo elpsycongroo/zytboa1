@@ -1,4 +1,4 @@
-package com.zytboa.dao;
+package zytboa.dao;
 
 import java.util.List;
 

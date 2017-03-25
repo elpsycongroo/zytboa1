@@ -1,4 +1,4 @@
-package com.zytboa.controller;
+package zytboa.controller;
 
 import com.zytboa.Constants.Constants;
 import com.zytboa.service.UserService;

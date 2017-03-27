@@ -430,8 +430,8 @@
         filterShowClear: false,
         alignmentSelectControlOptions: undefined,
         filterTemplate: {
-            input: function (that, field, isVisible, placeholder) {
-                return sprintf('<input type="text" class="form-control bootstrap-table-filter-control-%s" style="width: 100%; visibility: %s" placeholder="%s">', field, isVisible, placeholder);
+            input: function (that, field, isVisible) {
+                return sprintf('<input type="text" class="form-control bootstrap-table-filter-control-%s" style="width: 100%; visibility: %s">', field, isVisible);
             },
             select: function (that, field, isVisible) {
                 return sprintf('<select class="form-control bootstrap-table-filter-control-%s" style="width: 100%; visibility: %s" dir="%s"></select>',

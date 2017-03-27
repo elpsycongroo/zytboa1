@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="proPath" value="${pageContext.request.contextPath}" />
 <aside class="col-md-2" style="padding-left: 0px;">
     <nav class="sidebar-nav">
         <ul class="metismenu" id="menu1">
@@ -14,7 +16,7 @@
                     <span class="fa fa-fw fa-book fa-lg"></span>货源管理
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="#">供应商管理</a></li>
+                    <li><a href="${proPath}/supplier">供应商管理</a></li>
                     <li><a href="#">商品管理</a></li>
                 </ul>
             </li>

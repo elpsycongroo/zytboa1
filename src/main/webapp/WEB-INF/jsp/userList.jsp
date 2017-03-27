@@ -6,11 +6,14 @@
 <head>
     <link rel="stylesheet" type="text/css" href="${proPath}/css/bootstrap-table.css"/>
     <link rel="stylesheet" type="text/css" href="${proPath}/css/bootstrap-editable.css"/>
+    <link rel="stylesheet" type="text/css" href="${proPath}/css/bootstrap-table-filter-control.css"/>
     <script type="text/javascript" src="${proPath}/js/bootstrap-table.js"></script>
     <script type="text/javascript" src="${proPath}/js/locale/bootstrap-table-zh-CN.js"></script>
     <script type="text/javascript" src="${proPath}/js/bootstrap-editable.min.js"></script>
     <script type="text/javascript" src="${proPath}/js/jquery.bootstrap-growl.min.js"></script>
     <script type="text/javascript" src="${proPath}/js/extensions/bootstrap-table-editable.js"></script>
+    <script type="text/javascript" src="${proPath}/js/extensions/bootstrap-table-filter-control.js"></script>
+
     <title>My JSP 'userList.jsp' starting page</title>
 </head>
 
@@ -40,6 +43,28 @@ This is my JSP page. <br>
         var oTableInit = new Object();
         //初始化Table
         oTableInit.Init = function () {
+            $('#tb_roles').bootstrapTable({
+                url: '${proPath}/user/userTable',
+                method: 'get',
+                striped: true,
+                cache: false,
+                pagination: true,
+                sortable: true,
+                queryParams: function (param) {
+                    return param;
+                },
+                queryParamsType: "limit",
+                detailView: false,//父子表
+                sidePagination: "server",
+                pageSize: 10,
+                pageList: [10, 25, 50, 100],
+                search: true,
+                showColumns: true,
+                showRefresh: true,
+                minimumCountColumns: 2,
+                clickToSelect: true,
+
+            });
             $('#tb_departments').bootstrapTable({
                 url: '${proPath}/user/userTable',    //请求后台的URL（*）
                 method: 'get',                      //请求方式（*）
@@ -65,14 +90,17 @@ This is my JSP page. <br>
                 showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
                 cardView: false,                    //是否显示详细视图
                 detailView: true,                   //是否显示父子表
+                filterControl:true,
                 columns: [{
                     checkbox: true
                 }, {
                     field: 'id',
-                    title: '用户编号'
+                    title: '用户编号',
+                    filterControl:"input"
                 }, {
                     field: 'name',
                     title: '用户名',
+                    filterControl:"select",
                     editable: {
                         type: 'text',
                         title: '用户名',
@@ -220,6 +248,16 @@ This is my JSP page. <br>
         </button>
     </div>
     <table id="tb_departments"></table>
+    <table id="tb_roles" data-filter-control="true">
+        <!--初始化表头 方便加载过滤器-->
+        <thead>
+        <tr>
+            <th data-field="id" data-filter-control="input">ID</th>
+            <th data-field="name" data-filter-control="select">用户名</th>
+            <th data-field="password" data-filter-control="input">密码</th>
+        </tr>
+        </thead>
+    </table>
 </div>
 </body>
 </html>

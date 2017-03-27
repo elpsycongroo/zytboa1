@@ -6,7 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.zytboa.dao.UserDao;
+import com.zytboa.dao.UserMapper;
 import com.zytboa.service.UserService;
 import com.zytboa.vo.User;
 
@@ -14,7 +14,7 @@ import com.zytboa.vo.User;
 public  class UserServiceImpl implements UserService{
 
 	@Resource
-	private UserDao userDao;
+	private UserMapper userDao;
 
 	@Override
 	public int add(User user) {

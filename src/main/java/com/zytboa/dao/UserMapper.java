@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.zytboa.vo.User;
 
 @Repository(value="userDao")
-public interface UserDao {
+public interface UserMapper {
 	
 	public int add(User user);
 	

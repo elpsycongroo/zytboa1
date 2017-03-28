@@ -24,18 +24,25 @@ public class SupplierServiceImpl implements SupplierService{
 
     @Override
     public List<Supplier> selectByPage(Page page, JSONObject json) {
-        String key = "",value = "";
+        String value;
         Map<String,Object> resMap = new HashMap<>();
         if(json != null && json.size() > 0){
-            for(String k : json.keySet()){
-                key = k;
+            for(String key : json.keySet()){
+                value = json.getString(key);
+                resMap.put(key,"%"+value+"%");//此处键值对属性名-属性值
             }
-            value = json.getString(key);
-        resMap.put(key,value);
         }
-        //修改分页总记录数
-        page.setTotal(mapper.selectCount());
-        resMap.put("page",page);
-        return mapper.selectByPage(page);
+        resMap.put("offset",page.getOffset());
+        resMap.put("limit",page.getLimit());
+        List<Supplier> resList = mapper.selectByPage(resMap);
+        //修改分页总记录数 这里用resList.size()显然会只取到一页的行数
+        page.setTotal(mapper.selectCount(resMap));
+        return resList;
     }
+
+    @Override
+    public int addSupplier(Supplier supplier) {
+        return mapper.insertSelective(supplier);
+    }
+
 }

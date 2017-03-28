@@ -21,6 +21,8 @@
     <script type="text/javascript" src="${proPath}/js/locale/bootstrap-table-zh-CN.js"></script>
     <script type="text/javascript" src="${proPath}/js/jquery.bootstrap-growl.min.js"></script>
     <script type="text/javascript" src="${proPath}/js/extensions/bootstrap-table-filter-control.js"></script>
+    <script type="text/javascript" src="${proPath}/js/jquery.bootstrap-growl.min.js"></script>
+    <script src="${proPath}/js/jquery.validate.js"></script>
     <style>
         .navbar {
             margin-bottom: 0px;
@@ -58,25 +60,14 @@
                 </div>
                 <div class="panel-body">
                     <div class="panel panel-default">
-                        <div class="panel-heading">查询条件</div>
+                        <div class="panel-heading">查询方式</div>
                         <div class="panel-body">
-                            <form id="formSearch" class="form-horizontal">
-                                <div class="form-group" style="margin-top:15px">
-                                    <label class="control-label col-sm-1" for="txt_search_name">用户名称</label>
-                                    <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="txt_search_name">
-                                    </div>
-                                    <div class="col-sm-4" style="text-align:left;">
-                                        <button type="button" style="margin-left:50px" id="btn_query"
-                                                class="btn btn-primary">查询
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
+                            在相应表头下方的搜索框内输入即可查询。
                         </div>
                     </div>
                     <div id="toolbar" class="btn-group">
-                        <button id="btn_add" type="button" class="btn btn-default">
+                        <button id="btn_add" type="button" class="btn btn-default"
+                                data-toggle="modal" data-target="#addSupplierModal">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
                         </button>
                         <button id="btn_edit" type="button" class="btn btn-default">
@@ -90,16 +81,60 @@
                         <!--初始化表头 方便加载过滤器-->
                         <thead>
                         <tr>
-                            <th data-field="supName" data-filter-control="select">供应商名称</th>
-                            <th data-field="supLinkman" data-filter-control="select">联系人</th>
+                            <th data-field="supName" data-filter-control="input">供应商名称</th>
+                            <th data-field="supLinkman" data-filter-control="input">联系人</th>
                             <th data-field="supPhone" data-filter-control="input">联系电话</th>
-                            <th data-field="supAddress" data-filter-control="select">地址</th>
-                            <th data-field="supRemark" data-filter-control="select">备注</th>
-                            <th data-field="supType" data-filter-control="select">类型</th>
+                            <th data-field="supAddress" data-filter-control="input">地址</th>
+                            <th data-field="supRemark" data-filter-control="input">备注</th>
+                            <th data-field="supType" data-filter-control="input">类型</th>
                         </tr>
                         </thead>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addSupplierModal" tabindex="-1" role="dialog" aria-labelledby="addSupplierModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addSupplierModalLabel">新增供应商信息</h4>
+            </div>
+            <div class="modal-body">
+                <form id="addSupplier">
+                    <div class="form-group">
+                        <!--想要序列化一定要加name属性!-->
+                        <label for="supName" class="control-label">供应商名称(*):</label>
+                        <input type="text" class="form-control" id="supName" name="supName">
+                    </div>
+                    <div class="form-group">
+                        <label for="supLinkman" class="control-label">联系人(*):</label>
+                        <input type="text" class="form-control" id="supLinkman" name="supLinkman">
+                    </div>
+                    <div class="form-group">
+                        <label for="supPhone" class="control-label">联系电话:</label>
+                        <input type="text" class="form-control" id="supPhone" name="supPhone">
+                    </div>
+                    <div class="form-group">
+                        <label for="supAddress" class="control-label">地址:</label>
+                        <input type="text" class="form-control" id="supAddress" name="supAddress">
+                    </div>
+                    <div class="form-group">
+                        <label for="supRemark" class="control-label">备注:</label>
+                        <textarea class="form-control" id="supRemark" name="supRemark" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="supType" class="control-label">类型:</label>
+                        <input type="text" class="form-control" id="supType" name="supType">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="submitAdd">提交更改</button>
             </div>
         </div>
     </div>
@@ -122,10 +157,12 @@
         var oTableInit = new Object();
         //初始化Table
         oTableInit.Init = function () {
+            $('#tb_suppliers').bootstrapTable('destroy');
             $('#tb_suppliers').bootstrapTable({
                 url: '/supplier/supplierList',         //请求后台的URL（*）
                 method: 'get',                      //请求方式（*）
                 toolbar: '#toolbar',                //工具按钮用哪个容器
+                clickToSelect: true,                //是否启用点击选中行
                 striped: true,                      //是否显示行间隔色
                 cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
                 pagination: true,                   //是否显示分页（*）
@@ -155,26 +192,13 @@
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
                 limit: params.limit,   //页面大小
                 offset: params.offset,  //页码
-                filter: params.filter
+                filter: params.filter   //查询字段条件
             };
             return temp;
         };
         return oTableInit;
     };
     //其余操作要等dom加载后才能执行。放到$(document).ready(function(){方法中或者放在div后
-    $(document).ready(function () {
-        $("#btn_query").click(function () {
-            alert("!!!");
-        });
-    });
-    //提示模块
-    function growl(msg, status) {
-        $.bootstrapGrowl(msg, {
-            type: status
-        });
-    }
-
-
     var ButtonInit = function () {
         var oInit = new Object();
         var postdata = {};
@@ -185,6 +209,84 @@
 
         return oInit;
     };
+    //校验新增信息模块
+    $("#addSupplier").validate({
+        errorElement : 'span',
+        errorClass : 'help-block',
+        focusInvalid : false,
+        rules : {
+            supName : {
+                required : true
+            },
+            supLinkman : {
+                required : true
+            }
+        },
+        messages : {
+            supName : {
+                required : "请输入供应商名称."
+            },
+            supLinkman : {
+                required : "请输入联系人姓名."
+            }
+        },
+
+        highlight : function(element) {
+            $(element).closest('.form-group').addClass('has-error');
+        },
+
+        success : function(label) {
+            label.closest('.form-group').removeClass('has-error');
+            label.remove();
+        },
+
+        errorPlacement : function(error, element) {
+            element.parent('div').append(error);
+            console.log(error);
+        },
+
+        submitHandler : function(form) {
+            form.submit();
+        }
+    });
+
+    $("#submitAdd").click(function(){
+        if ($('#addSupplier').validate().form()) {
+            saveSupplier();
+        }
+        return false;
+    });
+
+    function saveSupplier() {
+        $.ajax({
+            url: '${proPath}/supplier/saveSupplier',
+            type: 'post',
+            data:$("#addSupplier").serialize(),
+            success: function (data) {
+                if (data == "success") {
+                    growl("修改成功", "success");
+                    $("#addSupplierModal").modal('hide');
+                } else {
+                    growl("修改失败,修改值没有生效!如无法解决，请联系管理员", "danger");
+                }
+            },
+            error: function () {
+                growl("修改失败,修改值没有生效!如无法解决，请联系管理员", "danger");
+            }
+        });
+    }
+    //如果模态框被隐藏table自动刷新
+    $("#addSupplierModal").on('hidden.bs.modal',function(){
+        $("#tb_suppliers").bootstrapTable('refresh', {silent: true});
+    });
+    //提示模块
+    function growl(msg, status) {
+        $.bootstrapGrowl(msg, {
+            type: status
+        });
+    }
+
+
 </script>
 
 </body>

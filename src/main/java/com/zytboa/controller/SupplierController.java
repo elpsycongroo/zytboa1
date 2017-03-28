@@ -24,19 +24,31 @@ public class SupplierController {
     private SupplierService supplierService;
 
     @RequestMapping("/supplier")
-    public Object supplier(){
+    public Object supplier() {
         return "forward:/WEB-INF/supplier/supplier.jsp";
     }
 
     @RequestMapping("/supplier/supplierList")
     @ResponseBody
-    public Object getSupplierList(Page page,String filter){
-        Map<String,Object> map = new HashMap<>();
+    public Object getSupplierList(Page page, String filter) {
+        Map<String, Object> map = new HashMap<>();
         JSONObject json = JSON.parseObject(filter);
-        List<Supplier> resList = supplierService.selectByPage(page,json);
-        map.put("total",page.getTotal());
-        map.put("rows",resList);
+        List<Supplier> resList = supplierService.selectByPage(page, json);
+        map.put("total", page.getTotal());
+        map.put("rows", resList);
         return JSON.toJSONString(map);
+    }
+
+    @RequestMapping("/supplier/saveSupplier")
+    @ResponseBody
+    public Object saveSupplier(Supplier supplier) {
+        try{
+            supplierService.addSupplier(supplier);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return "success";
     }
 
 }

@@ -11,4 +11,5 @@ import java.util.List;
  */
 public interface SupplierService {
     List<Supplier> selectByPage(Page page, JSONObject json);
+    int addSupplier(Supplier supplier);
 }

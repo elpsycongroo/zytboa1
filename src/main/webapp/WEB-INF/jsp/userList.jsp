@@ -90,17 +90,17 @@ This is my JSP page. <br>
                 showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
                 cardView: false,                    //是否显示详细视图
                 detailView: true,                   //是否显示父子表
-                filterControl:true,
+                filterControl: true,
                 columns: [{
                     checkbox: true
                 }, {
                     field: 'id',
                     title: '用户编号',
-                    filterControl:"input"
+                    filterControl: "input"
                 }, {
                     field: 'name',
                     title: '用户名',
-                    filterControl:"select",
+                    filterControl: "select",
                     editable: {
                         type: 'text',
                         title: '用户名',
@@ -128,7 +128,7 @@ This is my JSP page. <br>
                                 growl("修改成功", "success");
                             } else {
                                 growl("修改失败,修改值没有生效!如无法解决，请联系管理员", "danger");
-                                $("#tb_departments").bootstrapTable('refresh', {slient: true});
+                                $("#tb_departments").bootstrapTable('refresh', {silent: true});
                             }
                         },
                         error: function () {
@@ -166,7 +166,7 @@ This is my JSP page. <br>
                 detailView: true,
                 uniqueId: "id",
                 pageSize: 10,
-                pageList:[10, 25],
+                pageList: [10, 25],
                 columns: [{
                     checkbox: true
                 }, {
@@ -186,7 +186,7 @@ This is my JSP page. <br>
                     field: 'password',
                     title: '用户密码'
                 }],
-                onExpandRow:function(index,row,$subdetail){
+                onExpandRow: function (index, row, $subdetail) {
                     oTableInit.InitSubTable;
                 }
             });

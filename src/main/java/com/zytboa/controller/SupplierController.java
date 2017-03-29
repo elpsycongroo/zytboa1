@@ -64,4 +64,16 @@ public class SupplierController {
         return "success";
     }
 
+    @RequestMapping("supplier/updateSupplier")
+    @ResponseBody
+    public Object updateSupplier(Supplier supplier){
+        try {
+            supplierService.updateRow(supplier);
+        }catch (Exception e){
+            e.printStackTrace();
+            return e.getMessage();
+        }
+        return "success";
+    }
+
 }

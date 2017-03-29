@@ -13,4 +13,5 @@ public interface SupplierService {
     List<Supplier> selectByPage(Page page, JSONObject json);
     int addRow(Supplier supplier);
     int deleteRows(List<Supplier> suppliers);
+    int updateRow(Supplier supplier);
 }

@@ -16,13 +16,16 @@
     <script async defer src="${proPath}/js/buttons.js"></script>
     <script src="${proPath}/js/jquery.noty.packaged.min.js"></script>
     <link rel="stylesheet" type="text/css" href="${proPath}/css/bootstrap-table.css"/>
+    <link rel="stylesheet" type="text/css" href="${proPath}/css/bootstrap-editable.css"/>
     <link rel="stylesheet" type="text/css" href="${proPath}/css/bootstrap-table-filter-control.css"/>
     <script type="text/javascript" src="${proPath}/js/bootstrap-table.js"></script>
     <script type="text/javascript" src="${proPath}/js/locale/bootstrap-table-zh-CN.js"></script>
+    <script type="text/javascript" src="${proPath}/js/bootstrap-editable.min.js"></script>
     <script type="text/javascript" src="${proPath}/js/jquery.bootstrap-growl.min.js"></script>
     <script type="text/javascript" src="${proPath}/js/extensions/bootstrap-table-filter-control.js"></script>
     <script type="text/javascript" src="${proPath}/js/jquery.bootstrap-growl.min.js"></script>
     <script src="${proPath}/js/jquery.validate.js"></script>
+    <script type="text/javascript" src="${proPath}/js/extensions/bootstrap-table-editable.js"></script>
     <style>
         .navbar {
             margin-bottom: 0px;
@@ -76,7 +79,8 @@
                         <button id="btn_edit" type="button" class="btn btn-default">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
                         </button>
-                        <button id="btn_delete" type="button" class="btn btn-default">
+                        <button id="btn_delete" type="button" class="btn btn-default"
+                                data-toggle="modal" data-target="#comfirm-delete">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
                         </button>
                     </div>
@@ -86,6 +90,7 @@
         </div>
     </div>
 </div>
+<!--新增供应商信息模态框-->
 <div class="modal fade" id="addSupplierModal" tabindex="-1" role="dialog" aria-labelledby="addSupplierModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -130,6 +135,19 @@
         </div>
     </div>
 </div>
+<!--确认删除模态框-->
+<div class="modal-fade" id="comfirm-delete" tabindex="-1" role="dialog" aria-labelledby="deleteSupplierModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">请确认</div>
+            <div class="modal-body">确认删除选中记录？</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger btn-ok">删除记录</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $(function () {
 
@@ -140,9 +158,7 @@
         //2.初始化Button的点击事件
         var oButtonInit = new ButtonInit();
         oButtonInit.Init();
-
     });
-
 
     var TableInit = function () {
         var oTableInit = new Object();
@@ -174,34 +190,84 @@
                 showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
-                filterControl:true,                  //开启列过滤搜索
+                filterControl: true,                  //开启列过滤搜索
                 columns: [{
                     checkbox: true
-                },{
-                    field:'supName',
-                    title:'供应商名称',
-                    filterControl:'input'
-                },{
-                    field:'supLinkman',
-                    title:'联系人',
-                    filterControl:'input'
-                },{
-                    field:'supPhone',
-                    title:'电话',
-                    filterControl:'input'
-                },{
-                    field:'supAddress',
-                    title:'地址',
-                    filterControl:'input'
-                },{
-                    field:'supType',
-                    title:'供应商类型',
-                    filterControl:'input'
-                },{
-                    field:'supRemark',
-                    title:'供应商备注',
-                    filterControl:'input'
-                }]
+                }, {
+                    field: 'supName',
+                    title: '供应商名称',
+                    filterControl: 'input',
+                    editable: {
+                        type: 'text',
+                        title: '供应商名称',
+                        validate: function (v) {
+                            if (!v) return '供应商名称不能为空'
+                        }
+                    }
+                }, {
+                    field: 'supLinkman',
+                    title: '联系人',
+                    filterControl: 'input',
+                    editable: {
+                        type: 'text',
+                        title: '联系人',
+                        validate: function (v) {
+                            if (!v) return '联系人不能为空'
+                        }
+                    }
+                }, {
+                    field: 'supPhone',
+                    title: '电话',
+                    filterControl: 'input',
+                    editable: {
+                        type: 'text',
+                        title: '电话'
+                    }
+                }, {
+                    field: 'supAddress',
+                    title: '地址',
+                    filterControl: 'input',
+                    editable: {
+                        type: 'text',
+                        title: '地址'
+                    }
+                }, {
+                    field: 'supType',
+                    title: '供应商类型',
+                    editable: {
+                        type: 'select',
+                        source: [{value: 1, text: "零件供应商"}, {value: 2, text: "邮箱供应商"}, {value: 3, text: "有色供应商"}],
+                        title: '供应商类型'
+                    }
+                }, {
+                    field: 'supRemark',
+                    title: '供应商备注',
+                    filterControl: 'input',
+                    editable: {
+                        type: 'text',
+                        title: '供应商备注'
+                    }
+                }],
+                onEditableSave: function (field, row, oldValue, $el) {
+                    $('#tb_suppliers').bootstrapTable('resetView');
+                    $.ajax({
+                        type: "post",
+                        url: "${proPath}/supplier/updateSupplier",
+                        data: row,
+                        dataType: 'text',
+                        success: function (data) {
+                            if (data == "success") {
+                                growl("修改成功", "success");
+                            } else {
+                                growl("修改失败,修改值没有生效!如无法解决，请联系管理员", "danger");
+                            }
+                        },
+                        error: function () {
+                            growl("修改失败,修改值没有生效!如无法解决，请联系管理员", "danger");
+
+                        }
+                    });
+                }
             });
         };
 
@@ -229,62 +295,66 @@
     };
     //校验新增信息模块
     $("#addSupplier").validate({
-        errorElement : 'span',
-        errorClass : 'help-block',
-        focusInvalid : false,
-        rules : {
-            supName : {
-                required : true
+        errorElement: 'span',
+        errorClass: 'help-block',
+        focusInvalid: false,
+        rules: {
+            supName: {
+                required: true
             },
-            supLinkman : {
-                required : true
+            supLinkman: {
+                required: true
             }
         },
-        messages : {
-            supName : {
-                required : "请输入供应商名称."
+        messages: {
+            supName: {
+                required: "请输入供应商名称."
             },
-            supLinkman : {
-                required : "请输入联系人姓名."
+            supLinkman: {
+                required: "请输入联系人姓名."
             }
         },
 
-        highlight : function(element) {
+        highlight: function (element) {
             $(element).closest('.form-group').addClass('has-error');
         },
 
-        success : function(label) {
+        success: function (label) {
             label.closest('.form-group').removeClass('has-error');
             label.remove();
         },
 
-        errorPlacement : function(error, element) {
+        errorPlacement: function (error, element) {
             element.parent('div').append(error);
             console.log(error);
         },
 
-        submitHandler : function(form) {
+        submitHandler: function (form) {
             form.submit();
         }
     });
 
-    $("#submitAdd").click(function(){
+    $("#submitAdd").click(function () {
         if ($('#addSupplier').validate().form()) {
             saveSupplier();
         }
         return false;
     });
 
-    $("#btn_delete").click(function(){
-        if($("#tb_suppliers").bootstrapTable('getAllSelections').length == 0){
+    $("#confirm-delete").on('show.bs.modal',function(e){
+        if ($("#tb_suppliers").bootstrapTable('getAllSelections').length == 0) {
             growl("请至少选中一行", "danger");
             return;
         }
+        $(this).find('.btn-ok').click(deleteRows());
+    });
+
+    function deleteRows() {
         $.ajax({
             url: '${proPath}/supplier/deleteSupplier',
             type: 'post',
-            data: 'data='+JSON.stringify($("#tb_suppliers").bootstrapTable('getAllSelections')),
-            success: function(data) {
+            data: 'data=' + JSON.stringify($("#tb_suppliers").bootstrapTable('getAllSelections')),
+            success: function (data) {
                 if (data == "success") {
                     growl("删除成功", "success");
                     $("#tb_suppliers").bootstrapTable('refresh', {silent: true});
@@ -292,17 +362,16 @@
                     growl("删除失败,请联系管理员：" + data, "danger");
                 }
             },
-            error: function(){
-                growl("删除失败，与服务器连接错误，请联系管理员！","danger");
+            error: function () {
+                growl("删除失败，与服务器连接错误，请联系管理员！", "danger");
             }
         });
-    });
-
+    }
     function saveSupplier() {
         $.ajax({
             url: '${proPath}/supplier/saveSupplier',
             type: 'post',
-            data:$("#addSupplier").serialize(),
+            data: $("#addSupplier").serialize(),
             success: function (data) {
                 if (data == "success") {
                     growl("修改成功", "success");
@@ -317,7 +386,10 @@
         });
     }
     //如果模态框被隐藏table自动刷新
-    $("#addSupplierModal").on('hidden.bs.modal',function(){
+    $("#addSupplierModal").on('hidden.bs.modal', function () {
+        $("#tb_suppliers").bootstrapTable('refresh', {silent: true});
+    });
+    $("#confirm-delete").on('hidden.bs.modal', function () {
         $("#tb_suppliers").bootstrapTable('refresh', {silent: true});
     });
     //提示模块

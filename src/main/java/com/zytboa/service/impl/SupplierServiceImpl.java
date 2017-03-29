@@ -54,4 +54,9 @@ public class SupplierServiceImpl implements SupplierService{
         return mapper.deleteSeleted(ids);
     }
 
+    @Override
+    public int updateRow(Supplier supplier) {
+        return mapper.updateByPrimaryKeySelective(supplier);
+    }
+
 }

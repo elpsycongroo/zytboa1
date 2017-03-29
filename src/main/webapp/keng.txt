@@ -1,3 +1,4 @@
 开发过程中的坑点合集
 1.$('form').serialize()函数执行的条件是元素必须含有name属性，否则取不到值。。
 2.dao接口中@Param("pageMapQuery")在mybatis的作用是指定map在xml中引用的属性名，即property，可以直接在#{}中使用.
+3.js文件一定要引用全 相关方法是否补充全

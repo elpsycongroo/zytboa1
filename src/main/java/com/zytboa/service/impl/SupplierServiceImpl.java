@@ -41,8 +41,17 @@ public class SupplierServiceImpl implements SupplierService{
     }
 
     @Override
-    public int addSupplier(Supplier supplier) {
+    public int addRow(Supplier supplier) {
         return mapper.insertSelective(supplier);
+    }
+
+    @Override
+    public int deleteRows(List<Supplier> suppliers){
+        String[] ids = new String[suppliers.size()];
+        for(int i = 0; i < suppliers.size(); i ++){
+            ids[i] = suppliers.get(i).getSupId();
+        }
+        return mapper.deleteSeleted(ids);
     }
 
 }

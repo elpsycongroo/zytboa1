@@ -75,6 +75,16 @@
         delete from supplier
         where sup_id = #{supId,jdbcType=VARCHAR}
     </delete>
+
+    <!--批量删除-->
+    <delete id="deleteSeleted" parameterType="java.util.List">
+        DELETE FROM supplier 
+        WHERE sup_id IN
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
     <insert id="insert" parameterType="com.zytboa.vo.Supplier">
         <!--
           WARNING - @mbggenerated

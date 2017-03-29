@@ -261,3 +261,17 @@ This is my JSP page. <br>
 </div>
 </body>
 </html>
+
+<%--<table id="tb_suppliers" data-filter-control="true">--%>
+<%--<!--初始化表头 方便加载过滤器-->--%>
+<%--<thead>--%>
+<%--<tr>--%>
+<%--<th data-field="supName" data-filter-control="input">供应商名称</th>--%>
+<%--<th data-field="supLinkman" data-filter-control="input">联系人</th>--%>
+<%--<th data-field="supPhone" data-filter-control="input">联系电话</th>--%>
+<%--<th data-field="supAddress" data-filter-control="input">地址</th>--%>
+<%--<th data-field="supRemark" data-filter-control="input">备注</th>--%>
+<%--<th data-field="supType" data-filter-control="input">类型</th>--%>
+<%--</tr>--%>
+<%--</thead>--%>
+<%--</table>--%>

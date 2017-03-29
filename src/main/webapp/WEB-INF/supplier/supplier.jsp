@@ -60,9 +60,12 @@
                 </div>
                 <div class="panel-body">
                     <div class="panel panel-default">
-                        <div class="panel-heading">查询方式</div>
+                        <div class="panel-heading">操作指南</div>
                         <div class="panel-body">
-                            在相应表头下方的搜索框内输入即可查询。
+                            <strong>查询</strong>：在相应表头下方的搜索框内输入即可查询。<br/>
+                            <strong>增加</strong>：点击按钮，在弹出对话框内输入内容即可。<br/>
+                            <strong>修改</strong>：点击要修改的行，在行内修改并确认即可。<br/>
+                            <strong>删除</strong>：勾选一行或多行，点击删除并且确认即可。
                         </div>
                     </div>
                     <div id="toolbar" class="btn-group">
@@ -77,19 +80,7 @@
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
                         </button>
                     </div>
-                    <table id="tb_suppliers" data-filter-control="true">
-                        <!--初始化表头 方便加载过滤器-->
-                        <thead>
-                        <tr>
-                            <th data-field="supName" data-filter-control="input">供应商名称</th>
-                            <th data-field="supLinkman" data-filter-control="input">联系人</th>
-                            <th data-field="supPhone" data-filter-control="input">联系电话</th>
-                            <th data-field="supAddress" data-filter-control="input">地址</th>
-                            <th data-field="supRemark" data-filter-control="input">备注</th>
-                            <th data-field="supType" data-filter-control="input">类型</th>
-                        </tr>
-                        </thead>
-                    </table>
+                    <table id="tb_suppliers"></table>
                 </div>
             </div>
         </div>
@@ -162,7 +153,6 @@
                 url: '/supplier/supplierList',         //请求后台的URL（*）
                 method: 'get',                      //请求方式（*）
                 toolbar: '#toolbar',                //工具按钮用哪个容器
-                clickToSelect: true,                //是否启用点击选中行
                 striped: true,                      //是否显示行间隔色
                 cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
                 pagination: true,                   //是否显示分页（*）
@@ -184,6 +174,34 @@
                 showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
+                filterControl:true,                  //开启列过滤搜索
+                columns: [{
+                    checkbox: true
+                },{
+                    field:'supName',
+                    title:'供应商名称',
+                    filterControl:'input'
+                },{
+                    field:'supLinkman',
+                    title:'联系人',
+                    filterControl:'input'
+                },{
+                    field:'supPhone',
+                    title:'电话',
+                    filterControl:'input'
+                },{
+                    field:'supAddress',
+                    title:'地址',
+                    filterControl:'input'
+                },{
+                    field:'supType',
+                    title:'供应商类型',
+                    filterControl:'input'
+                },{
+                    field:'supRemark',
+                    title:'供应商备注',
+                    filterControl:'input'
+                }]
             });
         };
 
@@ -255,6 +273,29 @@
             saveSupplier();
         }
         return false;
+    });
+
+    $("#btn_delete").click(function(){
+        if($("#tb_suppliers").bootstrapTable('getAllSelections').length == 0){
+            growl("请至少选中一行", "danger");
+            return;
+        }
+        $.ajax({
+            url: '${proPath}/supplier/deleteSupplier',
+            type: 'post',
+            data: 'data='+JSON.stringify($("#tb_suppliers").bootstrapTable('getAllSelections')),
+            success: function(data) {
+                if (data == "success") {
+                    growl("删除成功", "success");
+                    $("#tb_suppliers").bootstrapTable('refresh', {silent: true});
+                } else {
+                    growl("删除失败,请联系管理员：" + data, "danger");
+                }
+            },
+            error: function(){
+                growl("删除失败，与服务器连接错误，请联系管理员！","danger");
+            }
+        });
     });
 
     function saveSupplier() {

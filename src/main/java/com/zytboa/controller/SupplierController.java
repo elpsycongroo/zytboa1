@@ -43,10 +43,23 @@ public class SupplierController {
     @ResponseBody
     public Object saveSupplier(Supplier supplier) {
         try{
-            supplierService.addSupplier(supplier);
+            supplierService.addRow(supplier);
         }catch (Exception e){
             e.printStackTrace();
-            throw new RuntimeException(e);
+            return e.getMessage();
+        }
+        return "success";
+    }
+
+    @RequestMapping("/supplier/deleteSupplier")
+    @ResponseBody
+    public Object deleteSupplier(String data){
+        try{
+            List<Supplier> resList = JSON.parseArray(data,Supplier.class);
+            supplierService.deleteRows(resList);
+        }catch (Exception e){
+            e.printStackTrace();
+            return e.getMessage();
         }
         return "success";
     }

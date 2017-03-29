@@ -60,4 +60,6 @@ public interface SupplierMapper {
     List<Supplier> selectByPage(@Param("pageMapQuery") Map map);
 
     int selectCount(@Param("hashMapQuery") Map map);
+
+    int deleteSeleted(String[] supIds);
 }

@@ -80,7 +80,7 @@
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
                         </button>
                         <button id="btn_delete" type="button" class="btn btn-default"
-                                data-toggle="modal" data-target="#comfirm-delete">
+                                data-toggle="modal">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
                         </button>
                     </div>
@@ -136,14 +136,18 @@
     </div>
 </div>
 <!--确认删除模态框-->
-<div class="modal-fade" id="comfirm-delete" tabindex="-1" role="dialog" aria-labelledby="deleteSupplierModal" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="deleteSupplierModal" tabindex="-1" role="dialog" aria-labelledby="deleteSupplierModalLabel">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">请确认</div>
-            <div class="modal-body">确认删除选中记录？</div>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="deleteSupplierModalLabel">请确认</h4>
+            </div>
+            <div class="modal-body">是否确认删除？</div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-danger btn-ok">删除记录</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-danger" id="submitDelete">确认删除</button>
             </div>
         </div>
     </div>
@@ -340,13 +344,15 @@
         }
         return false;
     });
-
-    $("#confirm-delete").on('show.bs.modal',function(e){
+    $('#btn_delete').click(function(){
         if ($("#tb_suppliers").bootstrapTable('getAllSelections').length == 0) {
             growl("请至少选中一行", "danger");
             return;
         }
-        $(this).find('.btn-ok').click(deleteRows());
+        $('#deleteSupplierModal').modal('toggle');
+    });
+    $('#submitDelete').click(function () {
+        deleteRows();
     });
 
     function deleteRows() {
@@ -357,7 +363,7 @@
             success: function (data) {
                 if (data == "success") {
                     growl("删除成功", "success");
-                    $("#tb_suppliers").bootstrapTable('refresh', {silent: true});
+                    $('#deleteSupplierModal').modal('hide');
                 } else {
                     growl("删除失败,请联系管理员：" + data, "danger");
                 }
@@ -389,7 +395,7 @@
     $("#addSupplierModal").on('hidden.bs.modal', function () {
         $("#tb_suppliers").bootstrapTable('refresh', {silent: true});
     });
-    $("#confirm-delete").on('hidden.bs.modal', function () {
+    $("#deleteSupplierModal").on('hidden.bs.modal', function () {
         $("#tb_suppliers").bootstrapTable('refresh', {silent: true});
     });
     //提示模块

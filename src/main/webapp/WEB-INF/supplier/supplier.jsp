@@ -4,17 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+    <title>供应商管理</title>
     <%@include file="/common/common.jsp" %>
-    <link rel="stylesheet" href="${proPath}/css/font-awesome.min.css">
-    <link rel="stylesheet" href="${proPath}/css/metisMenu.css"/>
-    <link rel="stylesheet" href="${proPath}/css/prism.min.css"/>
-    <link rel="stylesheet" href="${proPath}/css/animate.min.css"/>
-    <link href="${proPath}/css/mm-vertical.css" rel="stylesheet" type="text/css"/>
-    <script src="${proPath}/js/metisMenu.js"></script>
-    <script src="${proPath}/js/prism.min.js"></script>
-    <script async defer src="${proPath}/js/buttons.js"></script>
-    <script src="${proPath}/js/jquery.noty.packaged.min.js"></script>
     <link rel="stylesheet" type="text/css" href="${proPath}/css/bootstrap-table.css"/>
     <link rel="stylesheet" type="text/css" href="${proPath}/css/bootstrap-editable.css"/>
     <link rel="stylesheet" type="text/css" href="${proPath}/css/bootstrap-table-filter-control.css"/>
@@ -23,7 +14,6 @@
     <script type="text/javascript" src="${proPath}/js/bootstrap-editable.min.js"></script>
     <script type="text/javascript" src="${proPath}/js/jquery.bootstrap-growl.min.js"></script>
     <script type="text/javascript" src="${proPath}/js/extensions/bootstrap-table-filter-control.js"></script>
-    <script type="text/javascript" src="${proPath}/js/jquery.bootstrap-growl.min.js"></script>
     <script src="${proPath}/js/jquery.validate.js"></script>
     <script type="text/javascript" src="${proPath}/js/extensions/bootstrap-table-editable.js"></script>
     <style>
@@ -43,7 +33,7 @@
 <%@include file="/menu.jsp" %>
 <div class="container-fluid col-md-10 clo-md-offset-2 p-t-15">
     <h1>供应商管理 /
-        <small>Supplier</small>
+        <small>Supplier Manage</small>
     </h1>
     <div class="panel panel-collapse panel-primary">
         <div class="panel-heading">
@@ -75,9 +65,6 @@
                         <button id="btn_add" type="button" class="btn btn-default"
                                 data-toggle="modal" data-target="#addSupplierModal">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-                        </button>
-                        <button id="btn_edit" type="button" class="btn btn-default">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
                         </button>
                         <button id="btn_delete" type="button" class="btn btn-default"
                                 data-toggle="modal">
@@ -280,7 +267,8 @@
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
                 limit: params.limit,   //页面大小
                 offset: params.offset,  //页码
-                filter: params.filter   //查询字段条件
+                filter: params.filter,   //查询字段条件
+                flag : "false"
             };
             return temp;
         };

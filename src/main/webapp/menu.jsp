@@ -8,6 +8,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="proPath" value="${pageContext.request.contextPath}" />
+
+<link rel="stylesheet" href="${proPath}/css/font-awesome.min.css">
+<link rel="stylesheet" href="${proPath}/css/metisMenu.css"/>
+<link rel="stylesheet" href="${proPath}/css/prism.min.css"/>
+<link rel="stylesheet" href="${proPath}/css/animate.min.css"/>
+<link href="${proPath}/css/mm-vertical.css" rel="stylesheet" type="text/css"/>
+<script src="${proPath}/js/metisMenu.js"></script>
+<script src="${proPath}/js/prism.min.js"></script>
+<script async defer src="${proPath}/js/buttons.js"></script>
+<script src="${proPath}/js/jquery.noty.packaged.min.js"></script>
 <aside class="col-md-2" style="padding-left: 0px;">
     <nav class="sidebar-nav">
         <ul class="metismenu" id="menu1">
@@ -17,7 +27,9 @@
                 </a>
                 <ul aria-expanded="false">
                     <li><a href="${proPath}/supplier">供应商管理</a></li>
+                    <li><a href="${proPath}/supplier/export">供应商列表导出</a></li>
                     <li><a href="#">商品管理</a></li>
+                    <li><a href="#">商品列表导出</a></li>
                 </ul>
             </li>
             <li>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,12 +30,22 @@ public class SupplierController {
         return "forward:/WEB-INF/supplier/supplier.jsp";
     }
 
+    @RequestMapping("/supplier/export")
+    public Object exportSupplier() {
+        return "forward:/WEB-INF/supplier/supplierExport.jsp";
+    }
+
     @RequestMapping("/supplier/supplierList")
     @ResponseBody
-    public Object getSupplierList(Page page, String filter) {
+    public Object getSupplierList(Page page, String filter, String flag) {
         Map<String, Object> map = new HashMap<>();
+        List<Supplier> resList;
         JSONObject json = JSON.parseObject(filter);
-        List<Supplier> resList = supplierService.selectByPage(page, json, Constants.METHOD_SUP_TYPE_FALSE);
+        if (flag.equals("false")) {
+            resList = supplierService.selectByPage(page, json, Constants.METHOD_SUP_TYPE_FALSE);
+        } else {
+            resList = supplierService.selectByPage(page,json,Constants.METHOD_SUP_TYPE_TRUE);
+        }
         map.put("total", page.getTotal());
         map.put("rows", resList);
         return JSON.toJSONString(map);
@@ -43,9 +54,9 @@ public class SupplierController {
     @RequestMapping("/supplier/saveSupplier")
     @ResponseBody
     public Object saveSupplier(Supplier supplier) {
-        try{
+        try {
             supplierService.addRow(supplier);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();
         }
@@ -54,11 +65,11 @@ public class SupplierController {
 
     @RequestMapping("/supplier/deleteSupplier")
     @ResponseBody
-    public Object deleteSupplier(String data){
-        try{
-            List<Supplier> resList = JSON.parseArray(data,Supplier.class);
+    public Object deleteSupplier(String data) {
+        try {
+            List<Supplier> resList = JSON.parseArray(data, Supplier.class);
             supplierService.deleteRows(resList);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();
         }
@@ -67,10 +78,10 @@ public class SupplierController {
 
     @RequestMapping("supplier/updateSupplier")
     @ResponseBody
-    public Object updateSupplier(Supplier supplier){
+    public Object updateSupplier(Supplier supplier) {
         try {
             supplierService.updateRow(supplier);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();
         }

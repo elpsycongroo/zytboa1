@@ -87,7 +87,7 @@
 
 
 
-        <table tableName="supplier" domainObjectName="Supplier"
+        <table tableName="table_mapping" domainObjectName="TableMapping"
             enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"

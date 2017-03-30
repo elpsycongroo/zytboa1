@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Administrator on 2017/3/27.
  */
 public interface SupplierService {
-    List<Supplier> selectByPage(Page page, JSONObject json);
+    List<Supplier> selectByPage(Page page, JSONObject json,boolean flag);
     int addRow(Supplier supplier);
     int deleteRows(List<Supplier> suppliers);
     int updateRow(Supplier supplier);

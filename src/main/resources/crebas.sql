@@ -197,6 +197,18 @@ create table supplier_goods
   goods_id             varchar(40) not null,
   primary key (sup_id, goods_id)
 );
+-- ----------------------------
+-- Table structure for `table_mapping`
+-- ----------------------------
+DROP TABLE IF EXISTS `table_mapping`;
+CREATE TABLE `table_mapping` (
+  `tm_id` int(11) NOT NULL auto_increment,
+  `tm_table_id` varchar(25) COMMENT '表名',
+  `tm_table_col` varchar(30) COMMENT '字段名',
+  `tm_table_col_key` int(2) COMMENT '字段Mapping键',
+  `tm_table_col_val` varchar(255) COMMENT '字段mapping值',
+  PRIMARY KEY  (`tm_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 alter table emp_role add constraint FK_emp_role foreign key (emp_id)
 references employee (emp_id) on delete restrict on update restrict;

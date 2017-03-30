@@ -2,6 +2,7 @@ package com.zytboa.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.zytboa.Constants.Constants;
 import com.zytboa.service.SupplierService;
 import com.zytboa.vo.Page;
 import com.zytboa.vo.Supplier;
@@ -33,7 +34,7 @@ public class SupplierController {
     public Object getSupplierList(Page page, String filter) {
         Map<String, Object> map = new HashMap<>();
         JSONObject json = JSON.parseObject(filter);
-        List<Supplier> resList = supplierService.selectByPage(page, json);
+        List<Supplier> resList = supplierService.selectByPage(page, json, Constants.METHOD_SUP_TYPE_FALSE);
         map.put("total", page.getTotal());
         map.put("rows", resList);
         return JSON.toJSONString(map);

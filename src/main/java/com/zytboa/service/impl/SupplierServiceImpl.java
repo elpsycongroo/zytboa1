@@ -51,19 +51,24 @@ public class SupplierServiceImpl implements SupplierService {
         resMap.put("offset", page.getOffset());
         resMap.put("limit", page.getLimit());
         List<Supplier> resList = supplierMapper.selectByPage(resMap);
-        if (flag) {
-            tableMapping.setTmTableId(Constants.TABLE_ID_SUPPLIER);
-            tableMapping.setTmTableCol(Constants.TABLE_COL_SUPPLIER_TYPE);
-            List<TableMapping> mappingList = tableMappingMapper.selectByTableId(tableMapping);
-            for (Supplier s : resList) {
-                for (TableMapping t : mappingList) {
-                    if (Integer.parseInt(s.getSupType()) == t.getTmTableColKey()) {
-                        s.setSupType(t.getTmTableColVal());
-                        break;
-                    }
-                }
+        if(flag) {
+            for(Supplier s : resList){
+                s.setSupType(s.getTableMapping().getTmTableColVal());
             }
         }
+//        if (flag) {
+//            tableMapping.setTmTableId(Constants.TABLE_ID_SUPPLIER);
+//            tableMapping.setTmTableCol(Constants.TABLE_COL_SUPPLIER_TYPE);
+//            List<TableMapping> mappingList = tableMappingMapper.selectByTableId(tableMapping);
+//            for (Supplier s : resList) {
+//                for (TableMapping t : mappingList) {
+//                    if (Integer.parseInt(s.getSupType()) == t.getTmTableColKey()) {
+//                        s.setSupType(t.getTmTableColVal());
+//                        break;
+//                    }
+//                }
+//            }
+//        }
         //修改分页总记录数 这里用resList.size()显然会只取到一页的行数
         page.setTotal(supplierMapper.selectCount(resMap));
         return resList;
@@ -86,6 +91,18 @@ public class SupplierServiceImpl implements SupplierService {
     @Override
     public int updateRow(Supplier supplier) {
         return supplierMapper.updateByPrimaryKeySelective(supplier);
+    }
+
+    @Override
+    public Map<String, String> findSupplierType() {
+        Map<String,String> resMap = new HashMap<>();
+        tableMapping.setTmTableId("supplier");
+        tableMapping.setTmTableCol("sup_type");
+        List<TableMapping> resList = tableMappingMapper.selectByTableIdAndCol(tableMapping);
+        for(TableMapping m : resList){
+            resMap.put(m.getTmTableColKey().toString(),m.getTmTableColVal());
+        }
+        return resMap;
     }
 
 }

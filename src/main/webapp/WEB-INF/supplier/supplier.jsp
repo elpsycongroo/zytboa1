@@ -225,6 +225,8 @@
                 }, {
                     field: 'supType',
                     title: '供应商类型',
+                    filterControl:'select',
+                    filterData:'',
                     editable: {
                         type: 'select',
                         source: [{value: 1, text: "零件供应商"}, {value: 2, text: "邮箱供应商"}, {value: 3, text: "有色供应商"}],

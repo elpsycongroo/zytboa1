@@ -5,6 +5,7 @@ import com.zytboa.vo.Page;
 import com.zytboa.vo.Supplier;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/3/27.
@@ -14,4 +15,5 @@ public interface SupplierService {
     int addRow(Supplier supplier);
     int deleteRows(List<Supplier> suppliers);
     int updateRow(Supplier supplier);
+    Map<String,String> findSupplierType();
 }

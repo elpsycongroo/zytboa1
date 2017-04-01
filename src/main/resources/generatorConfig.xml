@@ -87,7 +87,7 @@
 
 
 
-        <table tableName="table_mapping" domainObjectName="TableMapping"
+        <table tableName="account" domainObjectName="Account"
             enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"
@@ -145,5 +145,60 @@
             <!--<columnOverride column="" javaType=""    jdbcType="" typeHandler=""  delimitedColumnName="" />-->
 
         </table>
+        <table tableName="department" domainObjectName="Department"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"
+        ></table>
+        <table tableName="emp_role" domainObjectName="EmpRole"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"
+        ></table>
+        <table tableName="employee" domainObjectName="Employee"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"
+        ></table>
+        <table tableName="goods" domainObjectName="Goods"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"
+        ></table>
+        <table tableName="log" domainObjectName="Log"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"
+        ></table>
+        <table tableName="pre_order" domainObjectName="PreOrder"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"
+        ></table>
+        <table tableName="privilege" domainObjectName="Privilege"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"
+        ></table>
+        <table tableName="role" domainObjectName="Role"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"
+        ></table>
+        <table tableName="order_goods_detail" domainObjectName="OrderGoodsDetail"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"
+        ></table>
+        <table tableName="role_pri" domainObjectName="RolePri"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"
+        ></table>
+        <table tableName="supplier_goods" domainObjectName="SupplierGoods"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"
+        ></table>
     </context>
 </generatorConfiguration>

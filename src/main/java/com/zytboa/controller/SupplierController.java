@@ -88,4 +88,21 @@ public class SupplierController {
         return "success";
     }
 
+    /**
+     * 返回类型json 避免中文编码问题
+     * @return
+     */
+    @RequestMapping(value="supplier/supplierType",produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public Object getSupplierType(){
+        Map<String,String> resMap;
+        try {
+            resMap = supplierService.findSupplierType();
+        }catch (Exception e){
+            e.printStackTrace();
+            return "{'1':'发生错误'}";
+        }
+        return JSON.toJSONString(resMap);
+    }
+
 }

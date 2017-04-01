@@ -56,4 +56,7 @@ public interface TableMappingMapper {
     int updateByPrimaryKey(TableMapping record);
 
     List<TableMapping> selectByTableId(TableMapping record);
+
+    List<TableMapping> selectByTableIdAndCol(TableMapping record);
+
 }

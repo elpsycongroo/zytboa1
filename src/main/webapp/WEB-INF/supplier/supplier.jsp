@@ -151,6 +151,11 @@
         oButtonInit.Init();
     });
 
+    $(document).ready(function(){
+        $('select').prepend("<option value='2'>邮箱供应商</option>");
+        $('select').prepend("<option value='1'>零件供应商</option>");
+    });
+
     var TableInit = function () {
         var oTableInit = new Object();
         //初始化Table
@@ -226,10 +231,22 @@
                     field: 'supType',
                     title: '供应商类型',
                     filterControl:'select',
-                    filterData:'',
                     editable: {
                         type: 'select',
-                        source: [{value: 1, text: "零件供应商"}, {value: 2, text: "邮箱供应商"}, {value: 3, text: "有色供应商"}],
+                        source: function(){
+                            var result = '';
+                            $.ajax({
+                                url:'${proPath}/supplier/supplierType',
+                                async:false,
+                                type:'get',
+                                data:{"type":"list"},
+                                success:function(data,status){
+                                    result = data;
+                                },
+                            });
+                            console.log(result);
+                            return result;
+                        },
                         title: '供应商类型'
                     }
                 }, {
@@ -270,7 +287,7 @@
                 limit: params.limit,   //页面大小
                 offset: params.offset,  //页码
                 filter: params.filter,   //查询字段条件
-                flag : "false"
+                flag : "true" //是否显示Mapping对应的原来值。false返回编号 true返回原值
             };
             return temp;
         };
@@ -341,9 +358,11 @@
         }
         $('#deleteSupplierModal').modal('toggle');
     });
-    $('#submitDelete').click(function () {
-        deleteRows();
+
+    $('select').click(function(){
+        $(this).empty();
     });
+
 
     function deleteRows() {
         $.ajax({

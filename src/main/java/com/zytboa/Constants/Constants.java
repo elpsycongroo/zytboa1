@@ -17,4 +17,7 @@ public class Constants {
     public static final Boolean METHOD_SUP_TYPE_TRUE = true;
     public static final Boolean METHOD_SUP_TYPE_FALSE = false;
 
+    //别名
+    public static final String TABLE_COL_ALIAS_SUPPLIER_TYPE = "supType";
+
 }

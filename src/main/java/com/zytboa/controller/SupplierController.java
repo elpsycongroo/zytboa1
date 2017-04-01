@@ -94,15 +94,15 @@ public class SupplierController {
      */
     @RequestMapping(value="supplier/supplierType",produces = "text/html;charset=UTF-8")
     @ResponseBody
-    public Object getSupplierType(){
-        Map<String,String> resMap;
+    public Object getSupplierType(String type){
+        Object result;
         try {
-            resMap = supplierService.findSupplierType();
+            result = supplierService.findSupplierType(type);
         }catch (Exception e){
             e.printStackTrace();
             return "{'1':'发生错误'}";
         }
-        return JSON.toJSONString(resMap);
+        return result;
     }
 
 }

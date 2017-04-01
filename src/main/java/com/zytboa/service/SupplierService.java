@@ -15,5 +15,5 @@ public interface SupplierService {
     int addRow(Supplier supplier);
     int deleteRows(List<Supplier> suppliers);
     int updateRow(Supplier supplier);
-    Map<String,String> findSupplierType();
+    Object findSupplierType(String type);
 }

@@ -1,6 +1,7 @@
 package com.zytboa.service.impl;
 
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.zytboa.Constants.Constants;
 import com.zytboa.dao.SupplierMapper;
@@ -12,6 +13,7 @@ import com.zytboa.vo.TableMapping;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,24 +53,24 @@ public class SupplierServiceImpl implements SupplierService {
         resMap.put("offset", page.getOffset());
         resMap.put("limit", page.getLimit());
         List<Supplier> resList = supplierMapper.selectByPage(resMap);
-        if(flag) {
-            for(Supplier s : resList){
-                s.setSupType(s.getTableMapping().getTmTableColVal());
-            }
-        }
-//        if (flag) {
-//            tableMapping.setTmTableId(Constants.TABLE_ID_SUPPLIER);
-//            tableMapping.setTmTableCol(Constants.TABLE_COL_SUPPLIER_TYPE);
-//            List<TableMapping> mappingList = tableMappingMapper.selectByTableId(tableMapping);
-//            for (Supplier s : resList) {
-//                for (TableMapping t : mappingList) {
-//                    if (Integer.parseInt(s.getSupType()) == t.getTmTableColKey()) {
-//                        s.setSupType(t.getTmTableColVal());
-//                        break;
-//                    }
-//                }
+//        if(flag) {
+//            for(Supplier s : resList){
+//                s.setSupType(s.getTableMapping().getTmTableColVal());
 //            }
 //        }
+        if (flag) {
+            tableMapping.setTmTableId(Constants.TABLE_ID_SUPPLIER);
+            tableMapping.setTmTableCol(Constants.TABLE_COL_SUPPLIER_TYPE);
+            List<TableMapping> mappingList = tableMappingMapper.selectByTableId(tableMapping);
+            for (Supplier s : resList) {
+                for (TableMapping t : mappingList) {
+                    if (Integer.parseInt(s.getSupType()) == t.getTmTableColKey()) {
+                        s.setSupType(t.getTmTableColVal());
+                        break;
+                    }
+                }
+            }
+        }
         //修改分页总记录数 这里用resList.size()显然会只取到一页的行数
         page.setTotal(supplierMapper.selectCount(resMap));
         return resList;
@@ -90,19 +92,40 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public int updateRow(Supplier supplier) {
+        tableMapping.setTmTableId(Constants.TABLE_ID_SUPPLIER);
+        tableMapping.setTmTableCol(Constants.TABLE_COL_SUPPLIER_TYPE);
+        List<TableMapping> mappingList = tableMappingMapper.selectByTableIdAndCol(tableMapping);
+        for(TableMapping tm : mappingList){
+            if(tm.getTmTableColVal().equals(supplier.getSupType())){
+                supplier.setSupType(tm.getTmTableColKey().toString());
+                break;
+            }
+        }
         return supplierMapper.updateByPrimaryKeySelective(supplier);
     }
 
     @Override
-    public Map<String, String> findSupplierType() {
+    public Object findSupplierType(String type) {
         Map<String,String> resMap = new HashMap<>();
-        tableMapping.setTmTableId("supplier");
-        tableMapping.setTmTableCol("sup_type");
-        List<TableMapping> resList = tableMappingMapper.selectByTableIdAndCol(tableMapping);
-        for(TableMapping m : resList){
-            resMap.put(m.getTmTableColKey().toString(),m.getTmTableColVal());
+        tableMapping.setTmTableId(Constants.TABLE_ID_SUPPLIER);
+        tableMapping.setTmTableCol(Constants.TABLE_COL_SUPPLIER_TYPE);
+        List<TableMapping> mappingList = tableMappingMapper.selectByTableIdAndCol(tableMapping);
+        List<Map> resList = new ArrayList<>();
+//        for(TableMapping m : mappingList){
+//            resMap.put(m.getTmTableColKey().toString(),m.getTmTableColVal());
+//            Map tempMap = new HashMap();
+//            resList.add
+//        }
+        for(int i = 0; i < mappingList.size(); i++){
+            resMap.put(mappingList.get(i).getTmTableColKey().toString(), mappingList.get(i).getTmTableColVal());
+            Map tempMap = new HashMap();
+            tempMap.put("text",mappingList.get(i).getTmTableColVal());
+            tempMap.put("value",mappingList.get(i).getTmTableColVal());
+            resList.add(i,tempMap);
         }
-        return resMap;
+        if(type.equals("map")) {return JSON.toJSONString(resMap);}
+        if(type.equals("list")) {return JSON.toJSONString(resList);}
+        return null;
     }
 
 }
